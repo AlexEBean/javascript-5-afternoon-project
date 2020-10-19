@@ -23,7 +23,7 @@ function outer() {
 */
   
 // Code Here
-const inner = outer ()
+let inner = outer()
 
 
 //Once you do that, invoke inner.
@@ -52,8 +52,8 @@ function callFriend(name) {
 */
 
 //Code Here
-const callJake = callFriend("Jake")
-callJake(435-215-9248)
+let callJake = callFriend("Jake")
+callJake("435-555-9248")
 
 ////////// PROBLEM 3 //////////
 
@@ -63,21 +63,20 @@ callJake(435-215-9248)
 
 //Code Here
 function makeCounter() {
-  let num = 0
+  let counter = 0
   return function () {
-    num++
-    return num
+    counter ++
+    return counter
   }
 }
 
 
-
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -94,23 +93,26 @@ function makeCounter() {
 
 function counterFactory(value) {
   // Code here.
-  let num = value
+  
   return {
     inc: function() {
-      return ++num
+      ++ value
+      return value
     },
-
+  
     dec: function() {
-      return --num
+      -- value
+      return value
     }
+
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -126,9 +128,10 @@ function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
   // code message function here.
-    function message () {
-      return `${welcomeText} ${firstname} ${lastname}.`
-    }
+  function message () {
+    return `${welcomeText} ${firstname} ${lastname}.`
+  }
+
   //Uncommment this to return the value of your message function
   return message;
 }
@@ -159,9 +162,10 @@ var module = (function() {
   // outside our lexical scope
   return {
     // Code here.
-    publicMethod () {
+    publicMethod: function(){
       return privateMethod()
-  }}; 
+    }
+  };
 })();
 
 module.publicMethod()
@@ -179,12 +183,14 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
-  addToSecret (num) {
-      return secret += num
+    addToSecret: function(addValue) {
+      secret += addValue
+      return secret
     },
-  takeAwayFromSecret (num) {
-    return secret -= num
+
+    takeAwayFromSecret(takeValue) {
+      secret -= takeValue
+      return secret
     }
   };
 }
@@ -208,12 +214,50 @@ function secretNumber() {
   
   Fix the code below to log the desired output.
 */
+//  Original code returns 6 values of 6, in time with the setTimeout function. Check this repl.it to see: https://repl.it/@AlexBean/javascript-5-afternoon-project-notes
+// function timeOutCounter() {
+//   for (var i = 0; i <= 5; i++) {
+//     setTimeout(function() {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// timeOutCounter()
 
 function timeOutCounter() {
-  for (let i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
+  for (var i = 0; i <= 5; i++) {
+    function returnVal(num){
+      setTimeout(function() {
+        console.log(num);
+      }, i * 1000);
+    }
+    returnVal(i)
   }
 }
 timeOutCounter();
+
+// Other ways that work that are easier to follow why they work over the original code
+
+// function timeOutCounter() {
+//   for (var i = 0; i <= 5; i++) {
+//     function returnVal() {
+//       let count = i 
+//       setTimeout(function() {
+//         console.log(count)
+//       }, i * 1000)
+//     }
+//     returnVal()
+//   }
+// }
+// timeOutCounter();
+
+// Don't understand why this one works
+
+// function timeOutCounter() {
+//   for (let i = 0; i <= 5; i++) {
+//     setTimeout(function() {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// timeOutCounter()
